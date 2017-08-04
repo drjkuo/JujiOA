@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/drjkuo/JujiOA/issues"
   },
-  "homepage": "https://github.com/drjkuo/JujiOA#readme"
+  "homepage": "https://github.com/drjkuo/JujiOA#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "twitter-node-client": "0.0.6"
+  }
 }
