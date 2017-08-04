@@ -23,7 +23,7 @@
       <div class="input-group">
         <input type="text" class="form-control" id="twitterID" placeholder="Search for...">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button">Go!</button>
+          <button id="btn" class="btn btn-default" type="button">Go!</button>
         </span>
       </div><!-- /input-group -->
     </div><!-- /.col-lg-6 -->
@@ -107,24 +107,29 @@ Tweets by @TwitterDev
   }
 
   //ajax request
-  var url = "http://localhost:3000/hot";
-  $.getJSON( url, function( data ) {
-      console.log(data,"?");
+  btn.addEventListener("click", function() {
+    // var twitterID = "Java";
+    var twitterID = "nytimes";
+    var url = "http://localhost:3000/hot?twitterID="+twitterID;
+    $.getJSON( url, function( data ) {
+      console.log(data);
       var p = data;
       for (var i=0; i<5; i++) {
+        document.getElementById(`id${i}`).innerHTML = "";
         twttr.widgets.createTweet(
-        data[i],
-        document.getElementById(`id${i}`),
-        {
-          align: 'left'
-        })
-        .then(function (el) {
-          console.log("Tweet displayed.")
-        });
-      }
-  }).fail(function() {
-      console.log( "Tweets Could Not Be Loaded." );
-  });
+          data[i],
+          document.getElementById(`id${i}`),
+          {
+            align: 'left'
+          })
+          .then(function (el) {
+            console.log("Tweet displayed.")
+          });
+        }
+      }).fail(function() {
+        console.log( "Tweets Could Not Be Loaded." );
+      });
+    });
 
 
   </script>
