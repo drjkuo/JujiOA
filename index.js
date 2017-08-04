@@ -8,6 +8,7 @@ var error = function (err, response, body) {
     console.log('ERROR [%s]', err);
 };
 var success = function (data) {
+    toBeSent = [];
     data = JSON.parse(data);
     for (var i=0; i<data.statuses.length; i++) {
       console.log(`Data #${i}`, data.statuses[i].text);
@@ -39,6 +40,9 @@ app.get('/', function (req, res) {
 
 app.get('/hot', function (req, res) {
   // res.sendFile(path.join(__dirname + '/index.html'));
+  if (typeof(toBeSent) !== "string") {
+    toBeSent = JSON.stringify(toBeSent);
+  }
   res.send(toBeSent);
 });
 
