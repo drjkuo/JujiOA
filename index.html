@@ -53,13 +53,16 @@ Tweets by @TwitterDev
 
   <!-- <div id="twitter-wjs"></div> -->
   <!-- <div id="container"></div> -->
-  <div id="first-tweet"></div>
-
-
-
+  <!-- <div id="first-tweet"></div> -->
 
 
   <script src="https://platform.twitter.com/widgets.js"></script>
+  <script
+  src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
   <script>window.twttr = (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -78,31 +81,55 @@ Tweets by @TwitterDev
   </script>
 
   <script>
-  twttr.widgets.createTimeline(
-    "600756918018179072",
-    document.getElementById("container"),
-    {
-      height: 400
-    }
-  );
+  // twttr.widgets.createTimeline(
+  //   "600756918018179072",
+  //   document.getElementById("container"),
+  //   {
+  //     height: 400
+  //   }
+  // );
 
-  twttr.widgets.createTweet(
-  '892917207587487744',
-  document.getElementById('first-tweet'),
-  {
-    align: 'left'
-  })
-  .then(function (el) {
-    console.log("Tweet displayed.")
+  // twttr.widgets.createTweet(
+  // '892917207587487744',
+  // document.getElementById('first-tweet'),
+  // {
+  //   align: 'left'
+  // })
+  // .then(function (el) {
+  //   console.log("Tweet displayed.")
+  // });
+
+  //create div for tweets
+  for (var i=0; i<5; i++) {
+    var g = document.createElement('div');
+    g.id = `id${i}`;
+    document.body.appendChild(g);
+  }
+
+  //ajax request
+  var url = "http://localhost:3000/hot";
+  $.getJSON( url, function( data ) {
+      console.log(data,"?");
+      var p = data;
+      for (var i=0; i<5; i++) {
+        twttr.widgets.createTweet(
+        data[i],
+        document.getElementById(`id${i}`),
+        {
+          align: 'left'
+        })
+        .then(function (el) {
+          console.log("Tweet displayed.")
+        });
+      }
+  }).fail(function() {
+      console.log( "Tweets Could Not Be Loaded." );
   });
+
 
   </script>
 
-  <script
-  src="http://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 
 </body>
