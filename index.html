@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Title of the document</title>
+  <title>Hot tweets</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -18,26 +18,31 @@
 </head>
 
 <body>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="input-group">
-        <input type="text" class="form-control" id="twitterID" placeholder="Search for...">
-        <span class="input-group-btn">
-          <button id="btn" class="btn btn-default" type="button">Go!</button>
-        </span>
-      </div><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-  </div><!-- /.row -->
 
+  <!-- <div class="container"> -->
+    <div class="jumbotron">
+      <h1>Bootstrap Tutorial</h1>
+      <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing
+        responsive, mobile-first projects on the web.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+          <input type="text" class="form-control input-lg" id="twitterID" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button id="btn" class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  <!-- </div> -->
   <!-- <div class="row">
     <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Dept of Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456">May 5, 2014</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div> -->
 
 
-  <!-- <a class="twitter-grid"
-  href="https://twitter.com/TwitterDev/timelines/539487832448843776">
-  National Park Tweets
-  </a> -->
+
 
 <!-- <a class="twitter-timeline"  href="https://twitter.com/search?l=&q=from%3Anytimes&src=typd" data-widget-id="893515711133270016">關於 from:nytimes 的推文</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> -->
@@ -50,12 +55,6 @@ data-link-color="#820bbb"
 data-border-color="#a80000">
 Tweets by @TwitterDev
 </a> -->
-
-  <!-- <div id="twitter-wjs"></div> -->
-  <!-- <div id="container"></div> -->
-  <!-- <div id="first-tweet"></div> -->
-
-
   <script src="https://platform.twitter.com/widgets.js"></script>
   <script
   src="http://code.jquery.com/jquery-3.2.1.min.js"
@@ -99,8 +98,14 @@ Tweets by @TwitterDev
   //   console.log("Tweet displayed.")
   // });
 
+  //create
+  var noShow = document.createElement('div');
+  noShow.style.display="none";
+  noShow.innerHTML="nothing popular!";
+  document.body.appendChild(noShow);
   //create div for tweets
-  for (var i=0; i<5; i++) {
+  var tweetNum = 5;
+  for (var i=0; i<tweetNum; i++) {
     var g = document.createElement('div');
     g.id = `id${i}`;
     document.body.appendChild(g);
@@ -108,13 +113,14 @@ Tweets by @TwitterDev
 
   //ajax request
   btn.addEventListener("click", function() {
-    // var twitterID = "Java";
-    var twitterID = "nytimes";
+    var twitterID = document.getElementById("twitterID").value;
+    // var twitterID = "nytimes";
     var url = "http://localhost:3000/hot?twitterID="+twitterID;
     $.getJSON( url, function( data ) {
       console.log(data);
       var p = data;
-      for (var i=0; i<5; i++) {
+      noShow.style.display= (data.length === 0) ? "" : "none";
+      for (var i=0; i<tweetNum; i++) {
         document.getElementById(`id${i}`).innerHTML = "";
         twttr.widgets.createTweet(
           data[i],
@@ -133,9 +139,5 @@ Tweets by @TwitterDev
 
 
   </script>
-
-
-
-
 </body>
 </html>
