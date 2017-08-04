@@ -32,7 +32,8 @@ var path = require('path');
 
 
 app.get('/', function (req, res) {
-  res.send(toBeSent);
+  res.sendFile(path.join(__dirname + '/index.html'));
+  // res.send(toBeSent);
 });
 
 app.listen(3000, function () {
