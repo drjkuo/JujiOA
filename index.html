@@ -8,34 +8,42 @@
 
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
   <style>
   body {
-    max-width: 500px;
+    width: 500px;
     margin: auto;
+    background-color: #c0deed;
+  }
+  h1 {
+    text-align: center;
   }
   </style>
+
+
   <!-- Latest compiled and minified JavaScript -->
 </head>
 
 <body>
 
   <!-- <div class="container"> -->
-    <div class="jumbotron">
+    <!-- <div class="jumbotron">
       <h1>Bootstrap Tutorial</h1>
       <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing
         responsive, mobile-first projects on the web.</p>
+    </div> -->
+
+    <div class="page-header">
+      <h1>Hot Tweets</h1>
+      <i class="fa fa-twitter-square" style="font-size:48px;color:red"></i>
     </div>
 
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="input-group">
-          <input type="text" class="form-control input-lg" id="twitterID" placeholder="Search for...">
-          <span class="input-group-btn">
-            <button id="btn" class="btn btn-default" type="button">Go!</button>
-          </span>
-        </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
-    </div><!-- /.row -->
+    <form>
+      <div class="form-group">
+        <!-- <label for="inputlg">Large input</label> -->
+        <input class="form-control input-lg" id="twitterID" type="text" placeholder="Enter Twitter ID, such as nodejs, java, nytimes">
+      </div>
+    </form>
   <!-- </div> -->
   <!-- <div class="row">
     <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Dept of Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456">May 5, 2014</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -100,11 +108,12 @@ Tweets by @TwitterDev
 
   //create
   var noShow = document.createElement('div');
+  noShow.id = "noShow";
   noShow.style.display="none";
-  noShow.innerHTML="nothing popular!";
+  noShow.innerHTML="<h2>Try something more popular!</h2>";
   document.body.appendChild(noShow);
   //create div for tweets
-  var tweetNum = 5;
+  var tweetNum = 10;
   for (var i=0; i<tweetNum; i++) {
     var g = document.createElement('div');
     g.id = `id${i}`;
@@ -112,29 +121,41 @@ Tweets by @TwitterDev
   }
 
   //ajax request
-  btn.addEventListener("click", function() {
-    var twitterID = document.getElementById("twitterID").value;
-    // var twitterID = "nytimes";
-    var url = "http://localhost:3000/hot?twitterID="+twitterID;
-    $.getJSON( url, function( data ) {
-      console.log(data);
-      var p = data;
-      noShow.style.display= (data.length === 0) ? "" : "none";
-      for (var i=0; i<tweetNum; i++) {
-        document.getElementById(`id${i}`).innerHTML = "";
-        twttr.widgets.createTweet(
-          data[i],
-          document.getElementById(`id${i}`),
-          {
-            align: 'left'
-          })
-          .then(function (el) {
-            console.log("Tweet displayed.")
-          });
-        }
-      }).fail(function() {
-        console.log( "Tweets Could Not Be Loaded." );
-      });
+  // ("keyup", function(event) {
+  //   event.preventDefault();
+  //   if (event.keyCode == 13) {
+  //       document.getElementById("id_of_button").click();
+  //   }
+  document.getElementById("twitterID").addEventListener("keypress", function(event) {
+    console.log("OK");
+    if (event.which == 13 || event.keyCode == 13) {
+      event.preventDefault();
+      // if (event.which == 13 || event.keyCode == 13) {
+      var twitterID = document.getElementById("twitterID").value;
+      // var twitterID = "nytimes";
+      var url = "http://localhost:3000/hot?twitterID="+twitterID;
+      $.getJSON( url, function( data ) {
+        console.log(data);
+        var p = data;
+        noShow.style.display= (data.length === 0) ? "" : "none";
+        for (var i=0; i<tweetNum; i++) {
+          document.getElementById(`id${i}`).innerHTML = ""; // clear div
+          twttr.widgets.createTweet( // twitter api
+            data[i],
+            document.getElementById(`id${i}`),
+            {
+              align: 'left'
+            })
+            .then(function (el) {
+              console.log("Tweet displayed.")
+            });
+          }
+        }).fail(function() {
+          console.log( "Tweets Could Not Be Loaded." );
+        });
+        return false;
+      }
+      // }
     });
 
 
