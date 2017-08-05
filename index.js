@@ -4,7 +4,6 @@ var config = JSON.parse(fs.readFileSync('./data/twitter_config', encoding="ascii
 var express = require('express');
 var app = express();
 var path = require('path');
-
 var toBeSent = [];
 //Callback functions
 
@@ -28,7 +27,7 @@ var success = function (data) {
     console.log(toBeSent);
     // console.log('Data [%s]', data);
 };
-	// twitter.getUserTimeline({ screen_name: 'drjkuo', count: '1'}, error, success);
+// twitter.getUserTimeline({ screen_name: 'drjkuo', count: '1'}, error, success);
 // twitter.getUserTimeline({ screen_name: 'nytimes','result\_type':'popular', count: '3'}, error, success);
 // twitter.getSearch({'q':' movie -scary :) since:2013-12-27', 'count': 10, 'result\_type':'popular'}, error, success);
 
