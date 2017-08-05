@@ -18,6 +18,8 @@
   "homepage": "https://github.com/drjkuo/JujiOA#readme",
   "dependencies": {
     "express": "^4.15.3",
+    "js-priority-queue": "^0.1.5",
+    "priorityqueuejs": "^1.0.0",
     "twitter-node-client": "0.0.6"
   }
 }
