@@ -29,7 +29,7 @@ for (var i=0; i<tweetNum; i++) {
 }
 
 // document.getElementById("twitterID").addEventListener("keypress", function(event)
-function pressEnter (event){
+function apiV1 (event){
   console.log("OK");
   if (event.which == 13 || event.keyCode == 13) {
     event.preventDefault();
@@ -60,3 +60,35 @@ function pressEnter (event){
       return false;
     }
   };
+
+  function apiV2 (event){
+    console.log("OK");
+    if (event.which == 13 || event.keyCode == 13) {
+      event.preventDefault();
+      // if (event.which == 13 || event.keyCode == 13) {
+      var twitterID = document.getElementById("twitterID").value;
+      // var twitterID = "nytimes";
+      // var url = "http://54.202.23.65:3000/hot2?twitterID="+twitterID;
+      var url = "http://localhost:3000/hot2?twitterID="+twitterID;
+      $.getJSON( url, function( data ) {
+        console.log(data);
+        var p = data;
+        noShow.style.display= (data.length === 0) ? "" : "none";
+        for (var i=0; i<tweetNum; i++) {
+          document.getElementById(`id${i}`).innerHTML = ""; // clear div
+          twttr.widgets.createTweet( // twitter api
+            data[i],
+            document.getElementById(`id${i}`),
+            {
+              align: 'left'
+            })
+            .then(function (el) {
+              console.log("Tweet displayed.")
+            });
+          }
+        }).fail(function() {
+          console.log( "Tweets Could Not Be Loaded." );
+        });
+        return false;
+      }
+    };
