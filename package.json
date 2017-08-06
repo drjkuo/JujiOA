@@ -26,5 +26,9 @@
     "chai": "^4.1.1",
     "mocha": "^3.5.0",
     "supertest": "^3.0.0"
+  },
+  "scripts": {
+    "start": "SET NODE_ENV=dev && nodemon index.js",
+    "test": "mocha --timeout 1000"
   }
 }

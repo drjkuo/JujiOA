@@ -4,10 +4,7 @@ var config = JSON.parse(fs.readFileSync('./data/twitter_config', encoding="ascii
 var express = require('express');
 var app = express();
 var path = require('path');
-var request = require('supertest'); // route testing
-var chai = require('chai'); // route testing
-var assert = chai.assert;
-var should = chai.should();
+
 var toBeSent = [];
 var toBeSent2 = [];
 
@@ -122,20 +119,7 @@ app.get('/hot', function (req, res) {
   });
 });
 
-describe('GET /hot?twitterID=', function() {
-  it('respond with array of id', function(done) {
-    var id = "nytimes";
-    request(app)
-    .get('/hot?twitterID='+id)
-    .expect(200)
-    .end((err, res) => {
-      console.log(res.body);
-      res.body.should.be.a('array');
-      res.body.length.should.be.eql(10);
-      done();
-    })
-  });
-});
+
 
 app.get('/hot2', function (req, res) {
   twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '20'}, error,
@@ -161,23 +145,12 @@ app.get('/hot2', function (req, res) {
   );
 });
 
-describe('GET /hot2?twitterID=', function() {
-  it('respond with array of id', function(done) {
-    var id = "nytimes";
-    request(app)
-    .get('/hot2?twitterID='+id)
-    .expect(200)
-    .end((err, res) => {
-      console.log(res.body);
-      res.body.should.be.a('array');
-      res.body.length.should.be.eql(10);
-      done();
-    })
-  });
-});
+
 
 
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
+
+module.exports = app; // for testing
