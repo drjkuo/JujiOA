@@ -18,10 +18,12 @@ uglify     = require('gulp-uglify'),
 rename     = require("gulp-rename");
 var gutil = require('gulp-util');
 var strip = require('gulp-strip-comments');
-var babel = require('gulp-babel')
+var babel = require('gulp-babel'),
+htmlreplace = require('gulp-html-replace'),
+minifyHTML  = require('gulp-minify-html');
 
 gulp.task('uglify', function() {
-  return gulp.src('./scripts/*.js')
+  return gulp.src('./js/*.js')
   .pipe(babel({
         presets: ['es2015']
     }))
@@ -35,8 +37,19 @@ gulp.task('uglify', function() {
   .pipe(gulp.dest('./build/js/'));
 });
 
+gulp.task('html-replace',function() {
+  var opts = {comments:false,spare:false,quotes:true};
+  return gulp.src('./*.html')
+    .pipe(htmlreplace({
+        'css': 'css/all.min.css',
+        'js': 'js/all.min.js'
+    }))
+    .pipe(minifyHTML(opts))
+    .pipe(gulp.dest('./build/'));
+});
 
-gulp.task('default',['uglify']);
+
+gulp.task('default',['html-replace', 'uglify']);
 
 
 // gulp.task('default',['webserver']);
