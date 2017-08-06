@@ -28,7 +28,8 @@ for (var i=0; i<tweetNum; i++) {
   document.body.appendChild(g);
 }
 
-document.getElementById("twitterID").addEventListener("keypress", function(event) {
+// document.getElementById("twitterID").addEventListener("keypress", function(event)
+function pressEnter (event){
   console.log("OK");
   if (event.which == 13 || event.keyCode == 13) {
     event.preventDefault();
@@ -58,4 +59,4 @@ document.getElementById("twitterID").addEventListener("keypress", function(event
       });
       return false;
     }
-  });
+  };
