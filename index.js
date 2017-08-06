@@ -4,17 +4,22 @@ var config = JSON.parse(fs.readFileSync('./data/twitter_config', encoding="ascii
 var express = require('express');
 var app = express();
 var path = require('path');
+var request = require('supertest'); // route testing
+var chai = require('chai'); // route testing
+var assert = chai.assert;
+var should = chai.should();
 var toBeSent = [];
 var toBeSent2 = [];
-// var PriorityQueue = require('js-priority-queue');
+
+var twitter = new Twitter(config);
+
+
 
 //Callback functions
-var twitter = new Twitter(config);
-	//Example calls
-
 var error = function (err, response, body) {
     console.log('ERROR [%s]', err);
 };
+
 var success = function (data) {
     toBeSent = [];
     data = JSON.parse(data);
@@ -66,20 +71,44 @@ app.get('/', function (req, res) {
   // res.send(toBeSent);
 });
 
-// var cb0 = function (req, res, next, cb1) {
-//   console.log(req.query.twitterID);
-//   var q = "from:"+req.query.twitterID;
-//   twitter.getSearch({ 'q': q , 'result\_type':'popular', 'count': '10'}, error, success);
-//   console.log("FIRST!!!!!");
-//   console.log(toBeSent);
-//   cb1(req, res, next);
-// }
+// describe('GET /', function() {
+//   it('respond with html', function() {
+//     return request(app)
+//       .get('/')
+//       .set('Accept', 'application/json')
+//       .expect(200)
+//       // .then(response => {
+//       //     console.log(response);
+//       //     assert(response.body.name, 'tobi')
+//       // })
+//   });
+// });
+
+// app.get('/user', function(req, res) {
+//   res.status(200).json({ name: 'tobi' });
+// });
 //
-// var sent = function (req, res, next) {
-//   toBeSent = JSON.stringify(toBeSent);
-//   console.log("SECOND!!!!!");
-//   res.send(toBeSent);
-// }
+// describe('GET /user', function() {
+//   it('respond with json', function() {
+//     return request(app)
+//       .get('/user')
+//       .set('Accept', 'application/json')
+//       .expect(200)
+//       .then(response => {
+//           assert(response.body.name, 'tobi')
+//       })
+//   });
+// });
+
+// request(app)
+//   .get('/user')
+//   .expect('Content-Type', /json/)
+//   .expect('Content-Length', '15')
+//   .expect(200)
+//   .end(function(err, res) {
+//     if (err) throw err;
+//   });
+
 
 app.get('/hot', function (req, res) {
   var q = "from:"+req.query.twitterID;
@@ -89,13 +118,27 @@ app.get('/hot', function (req, res) {
       for (var i=0; i<data.statuses.length; i++) {
         toBeSent.push(data.statuses[i].id_str);
       }
-      toBeSent = JSON.stringify(toBeSent);
-      res.send(toBeSent);
+      res.json(toBeSent);
+  });
+});
+
+describe('GET /hot?twitterID=', function() {
+  it('respond with array of id', function(done) {
+    var id = "nytimes";
+    request(app)
+    .get('/hot?twitterID='+id)
+    .expect(200)
+    .end((err, res) => {
+      console.log(res.body);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(10);
+      done();
+    })
   });
 });
 
 app.get('/hot2', function (req, res) {
-  twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '10'}, error,
+  twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '20'}, error,
     function (data) {
       // console.log('Data [%s]', data);
       toBeSent2 = [];
@@ -104,9 +147,8 @@ app.get('/hot2', function (req, res) {
       function cmp(a, b) { return b.cnt - a.cnt; };
       var tweetArr = [];
 
-      console.log(data);
+      // console.log(data);
       for (var i=0; i<data.length; i++) {
-        // console.log(`Data #${i}`, data[i].id_str, data[i].favorite_count);
         tweetArr.push({id: data[i].id_str, cnt: data[i].favorite_count});
       }
       tweetArr.sort(cmp);
@@ -114,11 +156,24 @@ app.get('/hot2', function (req, res) {
       for (var i=0; i<topNumber; i++) {
         if (tweetArr[i]) toBeSent2.push(tweetArr[i].id);
       }
-      // console.log(toBeSent2);
-      toBeSent2 = JSON.stringify(toBeSent2);
-      res.send(toBeSent2);
+      res.json(toBeSent2);
     }
   );
+});
+
+describe('GET /hot2?twitterID=', function() {
+  it('respond with array of id', function(done) {
+    var id = "nytimes";
+    request(app)
+    .get('/hot2?twitterID='+id)
+    .expect(200)
+    .end((err, res) => {
+      console.log(res.body);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(10);
+      done();
+    })
+  });
 });
 
 
