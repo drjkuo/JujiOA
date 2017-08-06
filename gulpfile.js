@@ -41,8 +41,8 @@ gulp.task('html-replace',function() {
   var opts = {comments:false,spare:false,quotes:true};
   return gulp.src('./*.html')
     .pipe(htmlreplace({
-        'css': 'css/all.min.css',
-        'js': 'js/all.min.js'
+        // 'css': 'css/all.min.css',
+        'js': 'main.min.js'
     }))
     .pipe(minifyHTML(opts))
     .pipe(gulp.dest('./build/'));
