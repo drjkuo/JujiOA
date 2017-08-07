@@ -28,7 +28,7 @@ Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduc
 
 Demo: http://54.202.23.65:3000/v2
 
-![alt](https://github.com/drjkuo/JujiOA/blob/master/apiv2.png)
+![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/apiv2.png)
 
 The diagram above shows the system architecture of first type of "representativeness": the author's definition -- the number of like.  When an user visit the landing page of our server, the server returns indexV2.html.  After the user enters one twitter handle, top 10 liked tweets will be displayed in the decreasing order.
 
@@ -88,7 +88,7 @@ app.get('/hot2', function (req, res) {
 
 Demo: http://54.202.23.65:3000/
 
-![alt](https://github.com/drjkuo/JujiOA/blob/master/apiv1.png) 
+![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/apiv1.png) 
 
 The diagram above shows the system architecture of second type of "representativeness": [Twitter's popularity](https://dev.twitter.com/rest/reference/get/search/tweets).  When an user visit another landing page of our server, the server returns index.html.  After the user enters one twitter handle, top 10 popular tweets will be displayed, where Twitter does not indicate how they evaluate the popularity.
 
@@ -116,7 +116,7 @@ app.get('/hot', function (req, res) {
 
 ## Unit testing
 Unit testing on the three APIs (GET /, GET /hot, GET /hot2) of the server.
-![alt](https://github.com/drjkuo/JujiOA/blob/master/unitTest.png) 
+![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/unitTest.png) 
 
 ## Build tools
 I use Gulp to help on JS file uglify and html minify.
