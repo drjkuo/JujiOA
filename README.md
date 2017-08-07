@@ -14,6 +14,8 @@ A Twitter hot tweets viewer to show at most 10 "representative tweets" selected 
 There are two types of "representativeness": (1) the author's definition -- the number of like; and (2) Twitter's popularity.
 
 ## Installation
+Please add a twitter_config file as advised [here](https://github.com/BoyCook/TwitterJSClient#usage) before the following steps.
+
 `npm install`
 
 `npm start`
