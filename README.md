@@ -19,9 +19,7 @@ There are two types of "representativeness": (1) the author's definition -- the 
 `npm start`
 
 ## Implementation
-Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduction), I need a server to fetch tweets and I deploy my server on AWS EC2
-
-As for the server setup, I use node.js and express web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help us a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook to help me.  
+Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduction), a server is required to fetch tweets from Twitter.  As for the server setup, I use node.js and express.js web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook.  During my development, I use Gulp to automate and enhance my workflow.  I also perform unit tests on the APIs of my server with Mocha and Chai.  At last, I deploy the server to AWS EC2.
 
 ## Architecture 
 ### Representativeness: (1) the number of like
@@ -58,7 +56,7 @@ On the client side, in the main.js file, the display of top 10 liked tweets is d
 ```
 
 #### Server side
-On the server side, in the index.js file, we leverage twitter.getUserTimeline by @BoyCook to pull the most recent 200 tweets of the designated twitter ID from Twitter.  Then, we sort those tweets by their number of liked and return top 10 liked tweets to the client.  One enhancement could be made by replacing sort() with the help of a priority queue.
+On the server side, in the index.js file, I leverage twitter.getUserTimeline by @BoyCook to pull the most recent 200 tweets of the designated twitter ID from Twitter.  Then, I sort those tweets by their number of liked and return top 10 liked tweets to the client.  One enhancement could be made by replacing sort() with the help of a priority queue.
 ```javascript
 app.get('/hot2', function (req, res) {
   twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '200'},
@@ -96,7 +94,7 @@ The diagram above shows the system architecture of second type of "representativ
 The client side works very similar to the abovementioned.  The difference is sending the request to another API.  
 
 #### Server side
-On the server side, in the index.js file, we leverage twitter.getSearch by @BoyCook to pull the most 10 popular tweets of the designated twitter ID from Twitter, and return top 10 liked tweets to the client.  
+On the server side, in the index.js file, I leverage twitter.getSearch by @BoyCook to pull the most 10 popular tweets of the designated twitter ID from Twitter, and return top 10 liked tweets to the client.  
 
 ```javascript
 app.get('/hot', function (req, res) {
@@ -115,16 +113,14 @@ app.get('/hot', function (req, res) {
 ```
 
 ## Unit testing
-Unit test, mocha, chai
-
+Unit test on the three APIs (GET /, GET /hot, GET /hot2) of the server.
+![alt](https://github.com/drjkuo/JujiOA/blob/master/unitTest.png) 
 
 ## Build tools
-Gulp
+I use Gulp to help on JS file uglify and html minify.
 
 ## Future work
 Due to the limitation (max 200) of tweetsTwitter's timeline API, if we would like to pull more than 200 of most recent tweets, we need to check with [Working with Timelines](https://dev.twitter.com/rest/public/timelines). 
-
-
 
 
 <!-- <img src="https://github.com/drjkuo/JujiOA/blob/master/fileStructure.png" height="480" width="283" > -->
