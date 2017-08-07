@@ -24,7 +24,7 @@ Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduc
 As for the server setup, I use node.js and express web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help us a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook to help me.  
 
 ## Architecture 
-### Representativeness: the number of like
+### Representativeness: (1) the number of like
 
 Demo: http://54.202.23.65:3000/v2
 
@@ -32,11 +32,8 @@ Demo: http://54.202.23.65:3000/v2
 
 The diagram above shows the system architecture of first type of "representativeness": the author's definition -- the number of like.  When an user visit the landing page of our server, the server returns indexV2.html.  After the user enters one twitter handle, top 10 liked tweets will be displayed in the decreasing order.
 
-You will be developing a working website that allows your users to see a twitter user's "representative tweets". At most 10 "representative tweets" must be selected from the tweets of a twitter user. You are free to devise your own implementation of "representativeness", as long as you can articulate your justification.
-On your site, when a user enters a person's twitter handle, your user expects to see her/his representative tweets,  as well as the evidence of their representativeness. 
-
 #### Client side
-On the client side, in the main.js file, the display of top 10 liked tweets is done as follows: (1) The keypress "Enter" triggers an AJAX request and expects to receive data consisting of an array of tweet IDs; (2) On receiving the expected data, [Twitter's factory function](https://dev.twitter.com/web/javascript/creating-widgets) twttr.widgets.createTweet() help us to dynamically generates the desired widgets.
+On the client side, in the main.js file, the display of top 10 liked tweets is done as follows: (1) The keypress "Enter" triggers an AJAX request and expects to receive data consisting of an array of tweet IDs; (2) On receiving the expected data, [Twitter's factory function](https://dev.twitter.com/web/javascript/creating-widgets) twttr.widgets.createTweet() help us to dynamically generates the desired widgets; (3) The browser will show top 10 liked tweets in the decreasing order.
 ```javascript
   function apiV2 (event){
     if (event.which == 13 || event.keyCode == 13) {
@@ -61,7 +58,7 @@ On the client side, in the main.js file, the display of top 10 liked tweets is d
 ```
 
 #### Server side
-On the server side, in the index.js file, we leverage twitter.getUserTimeline by @BoyCook to pull the most recent 200 tweets of the designated twitter ID from Twitter.  Then, we sort those tweets by their number of liked and return top 10 liked tweets to the client.
+On the server side, in the index.js file, we leverage twitter.getUserTimeline by @BoyCook to pull the most recent 200 tweets of the designated twitter ID from Twitter.  Then, we sort those tweets by their number of liked and return top 10 liked tweets to the client.  One enhancement could be made by replacing sort() with the help of a priority queue.
 ```javascript
 app.get('/hot2', function (req, res) {
   twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '200'},
@@ -87,14 +84,35 @@ app.get('/hot2', function (req, res) {
 });
 ```
 
+### Representativeness: (2) Twitter's popularity
+
+Demo: http://54.202.23.65:3000/
 
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/apiv1.png) 
-[Twitter's popularity](https://dev.twitter.com/rest/reference/get/search/tweets)
 
-<!-- <img src="https://github.com/drjkuo/JujiOA/blob/master/fileStructure.png" height="480" width="283" > -->
+The diagram above shows the system architecture of second type of "representativeness": [Twitter's popularity](https://dev.twitter.com/rest/reference/get/search/tweets).  When an user visit the landing page of our server, the server returns index.html.  After the user enters one twitter handle, top 10 popular tweets will be displayed, where Twitter does not indicate how they evaluate the popularity.
 
+#### Client side
+The client side works very similar to the abovementioned.  The difference is sending the request to another API.  
 
+#### Server side
+On the server side, in the index.js file, we leverage twitter.getSearch by @BoyCook to pull the most 10 popular tweets of the designated twitter ID from Twitter, and return top 10 liked tweets to the client.  
 
+```javascript
+app.get('/hot', function (req, res) {
+  var q = "from:"+req.query.twitterID;
+  twitter.getSearch({ 'q': q , 'result\_type':'popular', 'count': '10'},
+    error,
+    function (data) {
+      toBeSent = [];
+      data = JSON.parse(data);
+      for (var i=0; i<data.statuses.length; i++) {
+        toBeSent.push(data.statuses[i].id_str);
+      }
+      res.json(toBeSent);
+  });
+});
+```
 
 ## Unit testing
 Unit test, mocha, chai
@@ -103,7 +121,10 @@ Unit test, mocha, chai
 ## Build tools
 Gulp
 
+## Future work
+Due to the limitation (max 200) of tweetsTwitter's timeline API, if we would like to pull more than 200 of most recent tweets, we need to check with [Working with Timelines](https://dev.twitter.com/rest/public/timelines). 
 
 
 
 
+<!-- <img src="https://github.com/drjkuo/JujiOA/blob/master/fileStructure.png" height="480" width="283" > -->
