@@ -80,7 +80,8 @@ app.get('/hot2', function (req, res) {
   );
 });
 
-app.use(express.static(__dirname + '/js'));
+// app.use(express.static(__dirname + 'assets/'));
+app.use(express.static('assets'));
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });

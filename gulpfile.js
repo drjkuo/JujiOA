@@ -23,7 +23,7 @@ htmlreplace = require('gulp-html-replace'),
 minifyHTML  = require('gulp-minify-html');
 
 gulp.task('uglify', function() {
-  return gulp.src('./js/*.js')
+  return gulp.src('./assets/js/*.js')
   .pipe(babel({
         presets: ['es2015']
     }))
@@ -34,7 +34,7 @@ gulp.task('uglify', function() {
     path.basename += ".min";
     path.extname = ".js";
   }))
-  .pipe(gulp.dest('./build/js/'));
+  .pipe(gulp.dest('./build/assets/js/'));
 });
 
 gulp.task('html-replace',function() {
@@ -42,10 +42,10 @@ gulp.task('html-replace',function() {
   return gulp.src('./*.html')
     .pipe(htmlreplace({
         // 'css': 'css/all.min.css',
-        'js': 'main.min.js'
+        'js': 'js/main.min.js'
     }))
     .pipe(minifyHTML(opts))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./build'));
 });
 
 

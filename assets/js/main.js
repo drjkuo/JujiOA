@@ -36,8 +36,8 @@ function apiV1 (event){
     // if (event.which == 13 || event.keyCode == 13) {
     var twitterID = document.getElementById("twitterID").value;
     // var twitterID = "nytimes";
-    var url = "http://54.202.23.65:3000/hot2?twitterID="+twitterID;
-    // var url = "http://localhost:3000/hot?twitterID="+twitterID;
+    // var url = "http://54.202.23.65:3000/hot?twitterID="+twitterID;
+    var url = "http://localhost:3000/hot?twitterID="+twitterID;
     $.getJSON( url, function( data ) {
       console.log(data);
       var p = data;
@@ -68,8 +68,8 @@ function apiV1 (event){
       // if (event.which == 13 || event.keyCode == 13) {
       var twitterID = document.getElementById("twitterID").value;
       // var twitterID = "nytimes";
-      var url = "http://54.202.23.65:3000/hot2?twitterID="+twitterID;
-      // var url = "http://localhost:3000/hot2?twitterID="+twitterID;
+      // var url = "http://54.202.23.65:3000/hot2?twitterID="+twitterID;
+      var url = "http://localhost:3000/hot2?twitterID="+twitterID;
       $.getJSON( url, function( data ) {
         console.log(data);
         var p = data;
