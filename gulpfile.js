@@ -12,13 +12,13 @@ gulp.task('webserver', function() {
   }));
 });
 
-var concat     = require('gulp-concat'),
-minifyCSS  = require('gulp-minify-css'),
-uglify     = require('gulp-uglify'),
-rename     = require("gulp-rename");
-var gutil = require('gulp-util');
-var strip = require('gulp-strip-comments');
-var babel = require('gulp-babel'),
+var concat = require('gulp-concat'),
+minifyCSS = require('gulp-minify-css'),
+uglify = require('gulp-uglify'),
+rename = require("gulp-rename"),
+gutil = require('gulp-util'),
+strip = require('gulp-strip-comments'),
+babel = require('gulp-babel'),
 htmlreplace = require('gulp-html-replace'),
 minifyHTML  = require('gulp-minify-html');
 

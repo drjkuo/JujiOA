@@ -17,7 +17,7 @@ describe('GET /', function() {
     .set('Accept', 'application/json')
     .expect(200)
     .end((err, res) => {
-      console.log(res.text);
+      // console.log(res.text);
       res.text.should.include("Hot tweets");
       done();
     })
@@ -32,7 +32,7 @@ describe('GET /hot?twitterID=nytimes', function() {
     .get('/hot?twitterID='+id)
     .expect(200)
     .end((err, res) => {
-      console.log(res.body);
+      // console.log(res.body);
       res.body.should.be.a('array');
       res.body.length.should.be.eql(10);
       done();
@@ -48,7 +48,7 @@ describe('GET /hot2?twitterID=nytimes', function() {
     .get('/hot2?twitterID='+id)
     .expect(200)
     .end((err, res) => {
-      console.log(res.body);
+      // console.log(res.body);
       res.body.should.be.a('array');
       res.body.length.should.be.eql(10);
       done();
