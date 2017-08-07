@@ -44,7 +44,9 @@ app.get('/v2', function (req, res) {
 //API v1: TOP 10 most popular tweets defined by Twitter.com
 app.get('/hot', function (req, res) {
   var q = "from:"+req.query.twitterID;
-  twitter.getSearch({ 'q': q , 'result\_type':'popular', 'count': '10'}, error, function (data) {
+  twitter.getSearch({ 'q': q , 'result\_type':'popular', 'count': '10'},
+    error,
+    function (data) {
       toBeSent = [];
       data = JSON.parse(data);
       for (var i=0; i<data.statuses.length; i++) {
@@ -57,7 +59,8 @@ app.get('/hot', function (req, res) {
 
 //API v2: TOP 10 LIKED tweets defined by CY Kuo, gather most recent 200 tweets and return top 10 tweets with top likes
 app.get('/hot2', function (req, res) {
-  twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '200'}, error,
+  twitter.getUserTimeline({ screen_name: req.query.twitterID, count: '200'},
+    error,
     function (data) {
       // console.log('Data [%s]', data);
       toBeSent2 = [];
@@ -80,7 +83,8 @@ app.get('/hot2', function (req, res) {
   );
 });
 
-app.use(express.static(__dirname + '/js'));
+// app.use(express.static(__dirname + 'assets/'));
+app.use(express.static('assets'));
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
