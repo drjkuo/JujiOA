@@ -7,7 +7,7 @@ a link to the source code --
 https://github.com/drjkuo/JujiOA
 
 a link to a document -- 
-https://github.com/drjkuo/JujiOA
+https://github.com/drjkuo/JujiOA/blob/master/README.md
 
 ## Description
 A Twitter hot tweets viewer to show at most 10 "representative tweets" selected from the tweets of a twitter user.  
@@ -19,7 +19,7 @@ There are two types of "representativeness": (1) the author's definition -- the 
 `npm start`
 
 ## Implementation
-Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduction), a server is required to fetch tweets from Twitter.  As for the server setup, I use node.js and express.js web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook.  During my development, I use Gulp to automate and enhance my workflow.  I also perform unit tests on the APIs of my server with Mocha and Chai.  At last, I deploy the server to AWS EC2.
+Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduction), a server is required to fetch tweets from Twitter.  As for the server setup, I use node.js and express.js web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook.  During the development, I use Gulp to automate and enhance my workflow.  I also perform unit tests on the APIs of the server with Mocha and Chai.  At last, I deploy the application to AWS EC2.
 
 ## Architecture 
 ### Representativeness: (1) the number of like
@@ -31,7 +31,7 @@ Demo: http://54.202.23.65:3000/v2
 The diagram above shows the system architecture of first type of "representativeness": the author's definition -- the number of like.  When an user visit the landing page of our server, the server returns indexV2.html.  After the user enters one twitter handle, top 10 liked tweets will be displayed in the decreasing order.
 
 #### Client side
-On the client side, in the main.js file, the display of top 10 liked tweets is done as follows: (1) The keypress "Enter" triggers an AJAX request and expects to receive data consisting of an array of tweet IDs; (2) On receiving the expected data, [Twitter's factory function](https://dev.twitter.com/web/javascript/creating-widgets) twttr.widgets.createTweet() help us to dynamically generates the desired widgets; (3) The browser will show top 10 liked tweets in the decreasing order.
+On the client side, in the main.js file, the display of top 10 liked tweets is done as follows: (1) The keypress "Enter" triggers an AJAX request and expects to receive data consisting of an array of tweet IDs; (2) On receiving the expected data, [Twitter's factory function](https://dev.twitter.com/web/javascript/creating-widgets) twttr.widgets.createTweet() help us to dynamically generates the desired widgets; (3) The browser will show top 10 liked tweets in a decreasing order.
 ```javascript
   function apiV2 (event){
     if (event.which == 13 || event.keyCode == 13) {
@@ -88,7 +88,7 @@ Demo: http://54.202.23.65:3000/
 
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/apiv1.png) 
 
-The diagram above shows the system architecture of second type of "representativeness": [Twitter's popularity](https://dev.twitter.com/rest/reference/get/search/tweets).  When an user visit the landing page of our server, the server returns index.html.  After the user enters one twitter handle, top 10 popular tweets will be displayed, where Twitter does not indicate how they evaluate the popularity.
+The diagram above shows the system architecture of second type of "representativeness": [Twitter's popularity](https://dev.twitter.com/rest/reference/get/search/tweets).  When an user visit another landing page of our server, the server returns index.html.  After the user enters one twitter handle, top 10 popular tweets will be displayed, where Twitter does not indicate how they evaluate the popularity.
 
 #### Client side
 The client side works very similar to the abovementioned.  The difference is sending the request to another API.  
@@ -113,14 +113,11 @@ app.get('/hot', function (req, res) {
 ```
 
 ## Unit testing
-Unit test on the three APIs (GET /, GET /hot, GET /hot2) of the server.
+Unit testing on the three APIs (GET /, GET /hot, GET /hot2) of the server.
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/unitTest.png) 
 
 ## Build tools
 I use Gulp to help on JS file uglify and html minify.
 
 ## Future work
-Due to the limitation (max 200) of tweetsTwitter's timeline API, if we would like to pull more than 200 of most recent tweets, we need to check with [Working with Timelines](https://dev.twitter.com/rest/public/timelines). 
-
-
-<!-- <img src="https://github.com/drjkuo/JujiOA/blob/master/fileStructure.png" height="480" width="283" > -->
+Due to the limitation (max 200 tweets) of tweetsTwitter's timeline API, if we would like to pull more than 200 of most recent tweets, we need to check with [Working with Timelines](https://dev.twitter.com/rest/public/timelines) to paginate large result sets. 
