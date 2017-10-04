@@ -1,7 +1,7 @@
 # Representative Tweets
 
 ## TL;DR 
-a link to the working Web site -- (1) http://54.202.23.65:3000/v2; (2) http://54.202.23.65:3000/
+a link to the working Web site -- (1) http://52.41.191.125:3000/v2; (2) http://52.41.191.125:3000/
 
 a link to the source code -- 
 https://github.com/drjkuo/JujiOA
