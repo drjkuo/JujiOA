@@ -26,7 +26,7 @@ Please add a twitter_config file as advised [here](https://github.com/BoyCook/Tw
 ## Architecture 
 ### Representativeness: (1) the number of like
 
-Demo: http://54.202.23.65:3000/v2
+Demo: http://52.41.191.125:3000/v2
 
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/apiv2.png)
 
@@ -86,7 +86,7 @@ app.get('/hot2', function (req, res) {
 
 ### Representativeness: (2) Twitter's popularity
 
-Demo: http://54.202.23.65:3000/
+Demo: http://52.41.191.125:3000/
 
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/apiv1.png) 
 
