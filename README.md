@@ -21,7 +21,7 @@ Please add a twitter_config file as advised [here](https://github.com/BoyCook/Tw
 `npm start`
 
 ## Implementation
-Since [Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduction), a server is required to fetch tweets from Twitter.  As for the server setup, I use node.js and express.js web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook.  During the development, I use Gulp to automate and enhance my workflow.  I also perform unit tests on the APIs of the server with Mocha and Chai.  At last, I deploy the application to AWS EC2.
+[Twitter is running OAuth](https://dev.twitter.com/oauth/overview/introduction), so we need a server to fetch tweets from Twitter.  As for the server setup, I use node.js and express.js web framework.  In order to deal with Twitter's Oauth and pull data from Twitter, [Twitter Libraries](https://dev.twitter.com/resources/twitter-libraries) can help a lot, and I go with [TwitterJSClient](https://github.com/BoyCook/TwitterJSClient) by @BoyCook.  During the development, I use Gulp to automate and enhance my workflow.  I also perform unit tests on the APIs of the server with Mocha and Chai.  At last, I deploy the application to AWS EC2.
 
 ## Architecture 
 ### Representativeness: (1) the number of like
