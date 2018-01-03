@@ -1,14 +1,3 @@
-# Representative Tweets
-
-## TL;DR 
-a link to the working Web site -- (1) http://52.41.191.125:3000/v2; (2) http://52.41.191.125:3000/
-
-a link to the source code -- 
-https://github.com/drjkuo/JujiOA
-
-a link to a document -- 
-https://github.com/drjkuo/JujiOA/blob/master/README.md
-
 ## Description
 A Twitter hot tweets viewer to show at most 10 "representative tweets" selected from the tweets of a twitter user.  
 There are two types of "representativeness": (1) the author's definition -- the number of like; and (2) Twitter's popularity.
