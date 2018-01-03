@@ -15,8 +15,6 @@ Please add a twitter_config file as advised [here](https://github.com/BoyCook/Tw
 ## Architecture 
 ### Representativeness: (1) the number of like
 
-Demo: http://52.41.191.125:3000/v2
-
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/apiv2.png)
 
 The diagram above shows the system architecture of first type of "representativeness": the author's definition -- the number of like.  When an user visit the landing page of our server, the server returns indexV2.html.  After the user enters one twitter handle, top 10 liked tweets will be displayed in the decreasing order.
