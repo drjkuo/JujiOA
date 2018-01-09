@@ -1,3 +1,5 @@
+## Working on Java server version
+
 ## Description
 A Twitter hot tweets viewer to show at most 10 "representative tweets" selected from the tweets of a twitter user.  
 There are two types of "representativeness": (1) the author's definition -- the number of like; and (2) Twitter's popularity.
