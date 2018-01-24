@@ -111,8 +111,6 @@ app.get('/hot2', function (req, res) {
 
 ### Representativeness: (2) Twitter's popularity
 
-Demo: http://52.41.191.125:3000/
-
 ![alt](https://github.com/drjkuo/JujiOA/blob/master/readme/apiv1.png) 
 
 The diagram above shows the system architecture of second type of "representativeness": [Twitter's popularity](https://dev.twitter.com/rest/reference/get/search/tweets).  When an user visit another landing page of our server, the server returns index.html.  After the user enters one twitter handle, top 10 popular tweets will be displayed, where Twitter does not indicate how they evaluate the popularity.
